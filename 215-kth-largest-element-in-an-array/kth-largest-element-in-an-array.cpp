@@ -6,11 +6,8 @@ public:
             pq.push(nums[i]);
         }
         for(int i=k;i<nums.size();i++){
-            int top_el=pq.top();
-            if(nums[i]>top_el){
-                pq.pop();
-                pq.push(nums[i]);
-            }
+            pq.push(nums[i]);
+            if(pq.size()>k) pq.pop();
         }
         return pq.top();
     }
