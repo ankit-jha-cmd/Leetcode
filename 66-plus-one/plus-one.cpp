@@ -1,21 +1,20 @@
 class Solution {
 public:
-    vector<int> plusOne(vector<int>& v) {
-        int n = v.size();
-        for(int i = n-1; i >= 0; i--){
-            if(i == n-1)
-                v[i]++;
-            if(v[i] == 10){
-                v[i] = 0;
-                if(i != 0){
-                    v[i-1]++;
-                }
-                else{
-                    v.push_back(0);
-                    v[i] = 1;
-                }
-            }
-        }
-        return v;
+vector<int>specialcase(vector<int>&arr){
+    reverse(arr.begin(), arr.end());
+    int i=0;
+    while(i<arr.size() && arr[i]==9){
+        arr[i]=0;
+        i++;
+    }
+    if(i<arr.size()) arr[i]+=1;
+    else arr.push_back(1);
+    reverse(arr.begin(), arr.end());
+    return arr;
+}
+    vector<int> plusOne(vector<int>& digits) {
+        if(digits[digits.size()-1]==9) return specialcase(digits);
+        digits[digits.size()-1]+=1;
+        return digits;
     }
 };
