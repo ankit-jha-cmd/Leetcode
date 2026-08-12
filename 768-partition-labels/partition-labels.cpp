@@ -1,33 +1,30 @@
 class Solution {
 public:
     vector<int> partitionLabels(string s) {
-        map<char, pair<int, int>>mp;
+        map<char, pair<int,int>>mp;
         for(int i=0;i<s.size();i++){
             if(mp.find(s[i])==mp.end()) mp[s[i]]={i,i};
             else mp[s[i]].second=i;
         }
-        map<int, int>byfirst;
-        for(auto it : mp){
-            byfirst[it.second.first]=it.second.second;
+        vector<pair<int, int>>check;
+        for(auto it:mp){
+            check.push_back({it.second.first, it.second.second});
         }
-        vector<pair<int, int>>arr;
-        for(auto& p : byfirst){
-            arr.push_back(p);
-        }
-        vector<int>ans;
-        int i=0;
-        int j=1;
-        while(j<arr.size()){
-            if(arr[j].first <= arr[i].second){
-                arr[i].second=max(arr[i].second, arr[j].second);
+        sort(check.begin(), check.end());
+        int start=check[0].first;
+        int end=check[0].second;
+        vector<int>res;
+        for(int i=1;i<check.size();i++){
+            if(check[i].first<=end){
+                end=max(end, check[i].second);
             }
             else{
-                ans.push_back(arr[i].second - arr[i].first + 1);
-                i=j;
+                res.push_back(end-start+1);
+                start=check[i].first;
+                end=check[i].second;
             }
-            j++;
         }
-        ans.push_back(arr[i].second - arr[i].first + 1);
-        return ans;
+        res.push_back(end-start+1); 
+        return res;
     }
 };
