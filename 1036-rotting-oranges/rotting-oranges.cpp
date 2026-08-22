@@ -18,7 +18,7 @@ public:
         int delcol[]={0,1,0,-1};
         while(!q.empty()){
             int len=q.size();
-                while(len>0){
+                while(len--){
                     auto [row, col]=q.front();
                     q.pop();
                     for(int i=0;i<4;i++){
@@ -30,7 +30,6 @@ public:
                         vis[nrow][ncol]=1;
                 }
             }
-            len--;
         }
         cnt++;
     }
