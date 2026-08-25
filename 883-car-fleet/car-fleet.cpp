@@ -1,18 +1,18 @@
 class Solution {
 public:
     int carFleet(int target, vector<int>& position, vector<int>& speed) {
-        map<int, double>mpp;
+        vector<pair<int,int>>arr;
         for(int i=0;i<position.size();i++){
-            mpp[-position[i]]=(double)(target-position[i])/speed[i];
+            arr.push_back({position[i], speed[i]});
         }
-        double currmaxtime=0;
-        int fleet=0;
-        for(auto it: mpp){
-            if(it.second>currmaxtime){
-                currmaxtime=it.second;
-                fleet++;
-            }
+
+        sort(arr.begin(), arr.end(), greater<pair<int,int>>());
+        stack<double>st;
+        for(int i=0;i<arr.size();i++){
+            double time=(double)(target-arr[i].first)/arr[i].second;
+            if(st.empty()) st.push(time);
+            else if(!st.empty() && time>st.top()) st.push(time);
         }
-        return fleet;
+        return st.size();
     }
 };
