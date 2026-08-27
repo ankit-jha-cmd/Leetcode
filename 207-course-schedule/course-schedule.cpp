@@ -7,7 +7,7 @@ bool check(vector<vector<int>>&adj, int node, vector<int>&vis, vector<int>&path)
           if(!vis[it]){
               if(!check(adj, it, vis, path)) return false;
           }
-          else if(path[it]) return false;
+          if(path[it]) return false;
           
       }
       path[node]=0;
