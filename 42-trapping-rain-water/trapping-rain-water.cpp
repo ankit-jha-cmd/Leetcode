@@ -1,27 +1,33 @@
 class Solution {
 public:
+vector<int>findrm(vector<int>& arr){
+    int n=arr.size();
+    vector<int>rm(n);
+    rm[n-1]=arr[n-1];
+    for(int i=n-2;i>=0;i--){
+        rm[i]=max(arr[i], rm[i+1]);
+    }
+    return rm;
+}
+
+vector<int>findlm(vector<int>& arr){
+    int n=arr.size();
+    vector<int>lm(n);
+    lm[0]=arr[0];
+    for(int i=1;i<arr.size();i++){
+        lm[i]=max(arr[i], lm[i-1]);
+    }
+    return lm;
+}
     int trap(vector<int>& height) {
-        int i=0;
-        int j=0;
-        int n=height.size();
-        int ans=0;
-        while(i<n-1){
-            j=i+1;
-            while(j<n && height[j]<height[i]) j++;
-            if(j>=n){
-                j=i+1;
-                for(int k=i+1;k<n;k++){
-                    if(height[k]>height[j]) j=k;
-                }
+        int total=0;
+        vector<int>leftmax= findlm(height);
+        vector<int>rightmax= findrm(height);
+        for(int i=0;i<height.size();i++){
+            if(leftmax[i]>height[i] && rightmax[i]>height[i]){
+                total+= min(leftmax[i],rightmax[i])-height[i];
             }
-            int supposed= min(height[i], height[j]) * (j-i-1);
-            i++;
-            while(i<j){
-                supposed-=height[i];
-                i++;
-            }
-            ans+=supposed;
         }
-        return ans;
+        return total;
     }
 };
