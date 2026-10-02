@@ -1,15 +1,15 @@
 class Solution {
 public:
     vector<vector<int>> kClosest(vector<vector<int>>& points, int k) {
-        priority_queue<pair<long long, vector<int>>>pq;
-        vector<vector<int>>ans;
+        priority_queue<pair<long long,int>>pq;
         for(int i=0;i<points.size();i++){
-            long long val=points[i][0]*points[i][0] + points[i][1]*points[i][1];
-            pq.push({val,points[i]});
+            long long sum=(points[i][0]*points[i][0])+(points[i][1]*points[i][1]);
+            pq.push({sum, i});
             if(pq.size()>k) pq.pop();
         }
+        vector<vector<int>>ans;
         while(!pq.empty()){
-            ans.push_back(pq.top().second);
+            ans.push_back(points[pq.top().second]);
             pq.pop();
         }
         return ans;
