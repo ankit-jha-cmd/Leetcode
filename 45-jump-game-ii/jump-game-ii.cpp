@@ -1,18 +1,19 @@
 class Solution {
 public:
     int jump(vector<int>& nums) {
-        int l=0;
-        int r=0;
-        int jumps=0;
-        while(r<nums.size()-1){
-            int farthest=0;
-            for(int i=l;i<=r;i++){
-                farthest=max(farthest, i+nums[i]);
+        int maxJump=0;
+        int totalJumps=0;
+        int n=nums.size();
+        int end=0;
+        if(n==1) return 0;
+        for(int i=0;i<n;i++){
+            maxJump=max(maxJump, i+nums[i]);
+            if(i==end){
+                totalJumps++;
+                end=maxJump;
             }
-            l=r+1;
-            r=farthest;
-            jumps++;
+            if(end >= n-1) return totalJumps;
         }
-        return jumps;
+        return -1;
     }
 };
