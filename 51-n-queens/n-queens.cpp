@@ -18,11 +18,11 @@ public:
         }
         row=r;
         col=c;
-        while (r >= 0 && c < chess.size()) {
-            if (chess[r][c] == 'Q')
+        while (row >= 0 && col < chess.size()) {
+            if (chess[row][col] == 'Q')
                 return false;
-                r--;
-                c++;
+                row--;
+                col++;
         }
         return true;
     }
