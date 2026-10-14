@@ -8,22 +8,22 @@ priority_queue<int, vector<int>, greater<int>>minh;
     
     void addNum(int num) {
         maxh.push(num);
-        if((maxh.size()-minh.size())>1){
+        if(maxh.size()>minh.size()+1){
             minh.push(maxh.top());
             maxh.pop();
         }
         if(!minh.empty()){
             if(maxh.top()>minh.top()){
-                minh.push(maxh.top());
-                maxh.pop();
                 maxh.push(minh.top());
                 minh.pop();
+                minh.push(maxh.top());
+                maxh.pop();
             }
         }
     }
     
     double findMedian() {
-        if(maxh.size()==minh.size()) return (maxh.top() + minh.top())/2.0;
+        if(minh.size()==maxh.size()) return double(minh.top()+maxh.top())/2.0;
         return maxh.top();
     }
 };
