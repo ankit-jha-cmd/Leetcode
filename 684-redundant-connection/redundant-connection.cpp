@@ -1,7 +1,7 @@
 class Solution {
     class DSU{
-        public:
         vector<int>size, parent;
+        public:
         DSU(int n){
             size.resize(n+1, 1);
             parent.resize(n+1);
