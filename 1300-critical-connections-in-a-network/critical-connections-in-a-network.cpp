@@ -1,15 +1,14 @@
 class Solution {
 public:
-void dfs(int node, vector<vector<int>>&adj, int timer, vector<int>&vis, vector<int>&disc, vector<int>& ld, vector<int>&parent, vector<vector<int>>&res){
+void dfs(int node, int parent, vector<vector<int>>&adj, int timer, vector<int>&vis, vector<int>&disc, vector<int>& ld, vector<vector<int>>&res){
     vis[node]=1;
     disc[node]=timer;
     ld[node]=timer;
     timer++;
     for(auto it: adj[node]){
-        if(it==parent[node]) continue;
+        if(it==parent) continue;
         if(!vis[it]){
-            parent[it]=node;
-            dfs(it, adj, timer, vis, disc, ld, parent, res);
+            dfs(it, node, adj, timer, vis, disc, ld, res);
             ld[node]=min(ld[node], ld[it]);
             if(ld[it]>disc[node]) res.push_back({node, it});
         }
@@ -31,13 +30,13 @@ void dfs(int node, vector<vector<int>>&adj, int timer, vector<int>&vis, vector<i
         int timer=1;
         vector<int>disc(n,-1);
         vector<int>lowdisc(n,-1);
-        vector<int>parent(n, -1);
+        
         vector<int>vis(n,0);
         vector<vector<int>>res;
 
         for(int i=0;i<n;i++){
             if(!vis[i]){
-                dfs(i, adj, timer, vis, disc, lowdisc, parent, res);
+                dfs(i, -1, adj, timer, vis, disc, lowdisc, res);
             }
         }
         return res;
