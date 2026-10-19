@@ -1,6 +1,6 @@
 class Solution {
 public:
-void dfs(int node, int parent, vector<vector<int>>&adj, int timer, vector<int>&vis, vector<int>&disc, vector<int>& ld, vector<vector<int>>&res){
+void dfs(int node, int parent, vector<vector<int>>&adj, int& timer, vector<int>&vis, vector<int>&disc, vector<int>& ld, vector<vector<int>>&res){
     vis[node]=1;
     disc[node]=timer;
     ld[node]=timer;
@@ -9,10 +9,12 @@ void dfs(int node, int parent, vector<vector<int>>&adj, int timer, vector<int>&v
         if(it==parent) continue;
         if(!vis[it]){
             dfs(it, node, adj, timer, vis, disc, ld, res);
-            ld[node]=min(ld[node], ld[it]);
+            // when backtracking update the ld[node] comparing with its child node.
+            ld[node]=min(ld[node], ld[it]); 
             if(ld[it]>disc[node]) res.push_back({node, it});
         }
         else{
+            //if the adj node we checking is already visited but not the parent.
             ld[node]=min(ld[node], disc[it]);
         }
     }
