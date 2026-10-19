@@ -1,16 +1,25 @@
 class Solution {
 public:
     int carFleet(int target, vector<int>& position, vector<int>& speed) {
-        vector<pair<int, int>>arr;
+        vector<pair<int, int>>sorted;
         for(int i=0;i<speed.size();i++){
-            arr.push_back({position[i],speed[i]});
+            sorted.push_back({position[i],i});
         }
-        sort(arr.begin(), arr.end(), greater<pair<int, int>>());
-        stack<double>st;
-        for(auto it: arr){
-            double time= (double)(target-it.first)/it.second;
-            if(st.empty() || time>st.top()) st.push(time);
+        vector<int>t;
+        // for(int x:position)t.push_back(x); 
+        sort(sorted.begin(), sorted.end(), greater<pair<int,int>>());
+        int carfleet=0;
+        double time=-1.0;
+        for(int i=0;i<sorted.size();i++){
+            int pos=sorted[i].first;
+            int ind=sorted[i].second;
+            int sp=speed[ind];
+            double maxtime= (double)(target-pos)/sp;
+            if(maxtime>time){
+                time=maxtime;
+                carfleet++;
+            }
         }
-        return st.size();
+        return carfleet;
     }
 };
