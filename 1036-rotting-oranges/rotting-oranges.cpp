@@ -3,41 +3,42 @@ public:
     int orangesRotting(vector<vector<int>>& grid) {
         int n=grid.size();
         int m=grid[0].size();
-        queue<pair<int, int>>q;
-        vector<vector<int>>vis(n, vector<int>(m, 0));
+        vector<vector<int>>vis(n, vector<int>(m,0));
+        queue<pair<int,int>>q;
         for(int i=0;i<n;i++){
             for(int j=0;j<m;j++){
-                if(grid[i][j]==2){
+                if(!vis[i][j] && grid[i][j]==2){
                     q.push({i,j});
                     vis[i][j]=1;
                 }
             }
         }
-        int cnt=0;
-        int delrow[]={-1,0,1,0};
-        int delcol[]={0,1,0,-1};
+        int min=0;
+        vector<int>drow={-1,0,1,0};
+        vector<int>dcol={0,1,0,-1};
         while(!q.empty()){
             int len=q.size();
-                while(len--){
-                    auto [row, col]=q.front();
-                    q.pop();
-                    for(int i=0;i<4;i++){
-                    int nrow=row+delrow[i];
-                    int ncol=col+delcol[i];
-                        if(nrow>=0 && nrow<n && ncol>=0 && ncol<m
-                        && grid[nrow][ncol]==1 && !vis[nrow][ncol]){
-                        q.push({nrow, ncol});
-                        vis[nrow][ncol]=1;
+            while(len--){
+                auto [r,c]=q.front();
+                q.pop();
+                for(int i=0;i<4;i++){
+                    int nr=r+drow[i];
+                    int nc=c+dcol[i];
+                    if(nr>=0 && nr<n && nc>=0 && nc<m
+                    && !vis[nr][nc] && grid[nr][nc]==1){
+                        q.push({nr,nc});
+                        vis[nr][nc]=1;
+                    }
                 }
             }
+            min++;
         }
-        cnt++;
-    }
+
         for(int i=0;i<n;i++){
             for(int j=0;j<m;j++){
-                if(grid[i][j]==1 && vis[i][j]==0) return -1;
+                if(!vis[i][j] && grid[i][j]==1) return -1;
             }
         }
-        return cnt==0 ? 0 : cnt-1;
+        return min==0? 0: min-1;
     }
 };
