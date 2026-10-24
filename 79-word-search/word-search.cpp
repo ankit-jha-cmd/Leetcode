@@ -1,30 +1,29 @@
 class Solution {
 public:
-bool fn(vector<vector<char>>& board, vector<vector<int>>& vis, int row, int col, string& word, int ind){
+bool fn(int row, int col, int ind, vector<vector<char>>& grid, string& word){
     if(ind==word.size()){
         return true;
     }
-    if((row<0 || row>=board.size()) || (col<0 || col>=board[0].size())) return false;
-    if(board[row][col]!=word[ind]) return false;
-    if(!vis[row][col]){
-        vis[row][col]=1;
-        bool correct=
-        fn(board, vis, row, col+1, word, ind+1)||
-        fn(board, vis, row+1, col, word, ind+1)||
-        fn(board, vis, row, col-1, word, ind+1)||
-        fn(board, vis, row-1, col, word, ind+1);
-        vis[row][col]=0;
-        return correct;
-    }
-    return false;
+    if(row<0 || row>=grid.size() || col<0 || col>=grid[0].size()) return false;
+    int letter=word[ind];
+    if(grid[row][col]!=letter) return false;
+    char temp=grid[row][col];
+    grid[row][col]='#';
+    bool correct=
+    fn(row-1, col, ind+1, grid, word)||
+    fn(row, col+1, ind+1, grid, word)||
+    fn(row+1, col, ind+1, grid, word)||
+    fn(row, col-1, ind+1, grid, word);
+    grid[row][col]=temp;
+    return correct;
 }
     bool exist(vector<vector<char>>& board, string word) {
         int n=board.size();
         int m=board[0].size();
-        vector<vector<int>>vis(n, vector<int>(m, 0));
+        int ind=0;
         for(int i=0;i<n;i++){
             for(int j=0;j<m;j++){
-                if(fn(board, vis, i, j, word, 0)) return true;
+                if(fn(i,j,0,board, word)) return true;
             }
         }
         return false;
