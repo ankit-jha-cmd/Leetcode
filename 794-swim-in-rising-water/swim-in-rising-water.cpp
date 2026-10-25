@@ -19,7 +19,7 @@ public:
                 int ncol=c+dcol[i];
                 if(nrow>=0 && nrow<n && ncol>=0 && ncol<n){
                     int newdist= max(d,grid[nrow][ncol]); //get maximum d or t
-                    if(newdist<dist[nrow][ncol]){
+                    if(newdist<dist[nrow][ncol]){  //in smalles path that we pick.
                         dist[nrow][ncol]=newdist;
                         pq.push({newdist, nrow, ncol});
                     }
