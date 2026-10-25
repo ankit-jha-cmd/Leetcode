@@ -1,30 +1,32 @@
 class Solution {
 public:
-bool check(vector<vector<int>>&adj, int node, vector<int>&vis, vector<int>&path){
-      vis[node]=1;
-      path[node]=1;
-      for(auto it: adj[node]){
-          if(!vis[it]){
-              if(!check(adj, it, vis, path)) return false;
-          }
-          if(path[it]) return false;
-          
-      }
-      path[node]=0;
-      return true;
-  }
     bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
-        vector<vector<int>>adj(numCourses);
-        for(auto it: prerequisites){
-            adj[it[1]].push_back(it[0]);
+        int n=numCourses;
+        vector<int>indegree(n,0);
+        vector<vector<int>>adj(n);
+        for(int i=0;i<prerequisites.size();i++){
+            int a=prerequisites[i][1];
+            int b=prerequisites[i][0];
+            adj[a].push_back(b);
+            indegree[b]++;
         }
-        vector<int>vis(numCourses, 0);
-        vector<int>path(numCourses, 0);
-        for(int i=0;i<numCourses;i++){
-            if(!vis[i]){
-             if(!check(adj, i, vis, path)) return false;   
+
+        queue<int>q;
+        for(int i=0;i<n;i++){
+            if(indegree[i]==0) q.push(i);
+            if(i==n-1 && q.empty()) return false;
+        }
+
+        vector<int>ans;
+        while(!q.empty()){
+            int node=q.front();
+            q.pop();
+            ans.push_back(node);
+            for(auto it: adj[node]){
+                indegree[it]--;
+                if(indegree[it]==0) q.push(it);
             }
         }
-        return true;
+        return ans.size()==n? true: false;
     }
 };
