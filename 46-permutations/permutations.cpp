@@ -1,6 +1,6 @@
 class Solution {
 public:
-void fn(vector<int>& nums, vector<int>&vis, vector<int>&arr, vector<vector<int>>&ans){
+void fn(vector<int>&nums, vector<int>&vis, vector<int>&arr, vector<vector<int>>&ans){
     if(arr.size()==nums.size()){
         ans.push_back(arr);
         return;
@@ -16,7 +16,7 @@ void fn(vector<int>& nums, vector<int>&vis, vector<int>&arr, vector<vector<int>>
     }
 }
     vector<vector<int>> permute(vector<int>& nums) {
-        vector<int>vis(nums.size(), 0);
+        vector<int>vis(nums.size(),0);
         vector<int>arr;
         vector<vector<int>>ans;
         fn(nums, vis, arr, ans);
