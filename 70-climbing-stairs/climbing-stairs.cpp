@@ -1,14 +1,12 @@
 class Solution {
 public:
+int fn(vector<int>& dp, int n){
+    if(n<=1) return 1;
+    if(dp[n]!=-1) return dp[n];
+    return dp[n]=fn(dp, n-1)+fn(dp, n-2);
+}
     int climbStairs(int n) {
-        if(n <= 2) return n;
-        int a = 1;
-        int b = 2;
-        for(int i = 3; i <= n; i++) {
-            int c = a + b;
-            a = b;
-            b = c;
-        }
-        return b;
+        vector<int>dp(n+1, -1);
+        return fn(dp, n);
     }
 };
