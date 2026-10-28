@@ -11,15 +11,11 @@
  */
 class Solution {
 public:
-void fn(TreeNode* root){
-    if(!root) return;
-        swap(root->left, root->right);
-        invertTree(root->left);
-        invertTree(root->right);
-}
     TreeNode* invertTree(TreeNode* root) {
         if(!root) return NULL;
-        fn(root);
+        TreeNode* temp= root->left;
+        root->left=invertTree(root->right);
+        root->right=invertTree(temp);
         return root;
     }
 };
