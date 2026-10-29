@@ -1,21 +1,21 @@
 class Solution {
 public:
     int characterReplacement(string s, int k) {
-        int maxfreq=0;
-        int maxlen=0;
+        vector<int>freq(26, 0);
+        int mf=0;
+        int ml=0;
         int i=0;
         int j=0;
-        vector<int>freq(26);
         while(j<s.size()){
             freq[s[j]-'A']++;
-            maxfreq=max(freq[s[j]-'A'], maxfreq);
-            while((j-i+1)-maxfreq > k){
+            mf=max(mf, freq[s[j]-'A']);
+            while((j-i+1)-mf>k){
                 freq[s[i]-'A']--;
                 i++;
             }
-            maxlen=max(maxlen, j-i+1);
+            ml=max(ml, j-i+1);
             j++;
         }
-        return maxlen;
+        return ml;
     }
 };
