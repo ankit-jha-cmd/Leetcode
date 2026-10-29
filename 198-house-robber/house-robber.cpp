@@ -1,15 +1,14 @@
 class Solution {
 public:
-int fn(int ind, vector<int>& nums, vector<int>& dp){
-    if(ind>=nums.size()) return 0;
-    if(dp[ind]!=-1) return dp[ind];
-    int rob=  nums[ind]+fn(ind+2, nums, dp);
-    int skip= fn(ind+1, nums, dp);
-    return dp[ind]=max(rob, skip);
-}
     int rob(vector<int>& nums) {
-        int maxtheft=0;
-        vector<int>dp(nums.size(),-1);
-        return fn(0, nums, dp);
+        vector<int>dp(nums.size());
+        dp[0]=nums[0];
+        for(int i=1;i<nums.size();i++){
+            int take=nums[i];
+            if(i>1) take+=dp[i-2];
+            int nottake= dp[i-1];
+            dp[i]=max(take, nottake);
+        }
+        return dp[nums.size()-1];
     }
 };
