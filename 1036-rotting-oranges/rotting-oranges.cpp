@@ -13,31 +13,31 @@ public:
                 }
             }
         }
-        int cnt=-1;
-        vector<int>dr={-1,0,1,0};
-        vector<int>dc={0,1,0,-1};
+        int min=-1;
+        vector<int>drow={-1,0,1,0};
+        vector<int>dcol={0,1,0,-1};
         while(!q.empty()){
             int len=q.size();
             while(len--){
-                auto [r,c]=q.front();
+                auto[r,c]=q.front();
                 q.pop();
                 for(int i=0;i<4;i++){
-                int nr=r+dr[i];
-                int nc=c+dc[i];
-                    if(nr>=0 && nr<n && nc>=0 && nc<m
-                    && grid[nr][nc]==1 && !vis[nr][nc]){
-                        q.push({nr, nc});
-                        vis[nr][nc]=1;
+                    int nrow=r+drow[i];
+                    int ncol=c+dcol[i];
+                    if(nrow<n && nrow>=0 && ncol<m && ncol>=0
+                    && grid[nrow][ncol]==1 && !vis[nrow][ncol]){
+                        q.push({nrow, ncol});
+                        vis[nrow][ncol]=1;
                     }
                 }
             }
-            cnt++;
+            min++;
         }
         for(int i=0;i<n;i++){
             for(int j=0;j<m;j++){
-                if(!vis[i][j] && grid[i][j]==1) return -1;
+                if(grid[i][j]==1 && !vis[i][j]) return -1;
             }
         }
-        return cnt==-1? 0: cnt;
+        return min==-1? 0: min;
     }
 };
