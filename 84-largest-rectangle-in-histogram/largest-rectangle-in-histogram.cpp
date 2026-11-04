@@ -1,10 +1,11 @@
 class Solution {
 public:
-vector<int> findpse(vector<int>& arr, int n){
+
+vector<int>findsmallestright(vector<int>&arr){
     stack<int>st;
-    vector<int>ans(n,-1);
-    for(int i=n-1;i>=0;i--){
-        while(!st.empty() && arr[i]<arr[st.top()]){
+    vector<int>ans(arr.size(), arr.size());
+    for(int i=0;i<arr.size(); i++){
+        while(!st.empty() && arr[st.top()]>arr[i]){
             ans[st.top()]=i;
             st.pop();
         }
@@ -12,11 +13,12 @@ vector<int> findpse(vector<int>& arr, int n){
     }
     return ans;
 }
-vector<int> findnse(vector<int>& arr, int n){
+
+vector<int>findsmallestleft(vector<int>&arr){
     stack<int>st;
-    vector<int>ans(n,n);
-    for(int i=0;i<n;i++){
-        while(!st.empty() && arr[i]<arr[st.top()]){
+    vector<int>ans(arr.size(), -1);
+    for(int i=arr.size()-1;i>=0; i--){
+        while(!st.empty() && arr[st.top()]>arr[i]){
             ans[st.top()]=i;
             st.pop();
         }
@@ -25,12 +27,12 @@ vector<int> findnse(vector<int>& arr, int n){
     return ans;
 }
     int largestRectangleArea(vector<int>& heights) {
-        int n=heights.size();
-        vector<int>nse=findnse(heights, n);
-        vector<int>pse=findpse(heights, n);
+        vector<int>smallestleft=findsmallestleft(heights);
+        vector<int>smallestright=findsmallestright(heights);
         int maxarea=0;
-        for(int i=0;i<n;i++){
-           maxarea=max(maxarea, heights[i]*(nse[i]-pse[i]-1)); 
+        for(int i=0;i<heights.size();i++){
+            int area= heights[i]*(smallestright[i]-smallestleft[i]-1);
+            maxarea=max(maxarea, area);
         }
         return maxarea;
     }
