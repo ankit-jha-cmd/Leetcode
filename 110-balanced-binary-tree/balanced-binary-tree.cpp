@@ -11,12 +11,12 @@
  */
 class Solution {
 public:
-int fn(TreeNode* root,bool& ans){
+int fn(TreeNode* root, bool& ans){
     if(!root) return 0;
-    int left= fn(root->left, ans);
-    int right= fn(root->right, ans);
+    int left=1+fn(root->left, ans);
+    int right=1+fn(root->right, ans);
     if(abs(right-left)>1) ans=false;
-    return 1+max(left, right);
+    return max(left, right);
 }
     bool isBalanced(TreeNode* root) {
         bool ans=true;
