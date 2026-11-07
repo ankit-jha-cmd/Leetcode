@@ -13,7 +13,7 @@ class Solution {
 public:
 int fn(TreeNode* root, bool& ans){
     if(!root) return 0;
-    int left=1+fn(root->left, ans);
+    int left= 1+fn(root->left, ans);
     int right=1+fn(root->right, ans);
     if(abs(right-left)>1) ans=false;
     return max(left, right);
