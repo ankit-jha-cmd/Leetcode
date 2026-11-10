@@ -13,6 +13,6 @@ public:
             }
             if(j>=nums.size()-1) return jumps;
         }
-        return jumps;
+        return -1;
     }
 };
