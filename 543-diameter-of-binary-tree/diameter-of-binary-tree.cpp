@@ -11,11 +11,11 @@
  */
 class Solution {
 public:
-int fn(TreeNode* root, int& d){
+int fn(TreeNode* root, int &d){
     if(!root) return 0;
-    int left=fn(root->left, d);
-    int right=fn(root->right, d);
-    d=max(d,left+right);
+    int left=fn(root->left,d);
+    int right=fn(root->right,d);
+    d=max(d, left+right);
     return 1+max(left, right);
 }
     int diameterOfBinaryTree(TreeNode* root) {
