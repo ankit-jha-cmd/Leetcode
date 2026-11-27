@@ -1,13 +1,13 @@
 class Solution {
 public:
     int rob(vector<int>& nums) {
-        int pick=0;
-        int notPick=0;
+        int next1=0;
+        int next2=0;
         for(int i=nums.size()-1;i>=0;i--){
-            int curr=  max(notPick, nums[i]+pick);
-            pick=notPick;
-            notPick=curr;
+            int curr=  max(next2, nums[i]+next1);
+            next1=next2;
+            next2=curr;
         }
-        return max(pick, notPick);
+        return next2;
     }
 };
