@@ -1,18 +1,28 @@
 class Solution {
 public:
-int fn(vector<int>& nums, int ind, int end, vector<int>& dp){
-    if(ind>=end) return 0;
-    if(dp[ind]!=-1) return dp[ind];
-    int pick= nums[ind]+fn(nums, ind+2, end, dp);
-    int notPick=  fn(nums, ind+1, end, dp);
-    return dp[ind]=max(pick, notPick);
+int fn1(vector<int>&nums, int n){
+    int next1=0;
+    int next2=0;
+    for(int i=n-2;i>=0;i--){
+        int curr=max(next1, nums[i]+next2);
+        next2=next1;
+        next1=curr;
+    }
+    return next1;
+}
+int fn2(vector<int>&nums, int n){
+    int next1=0;
+    int next2=0;
+    for(int i=n-1;i>0;i--){
+        int curr=max(next1, nums[i]+next2);
+        next2=next1;
+        next1=curr;
+    }
+    return next1;
 }
     int rob(vector<int>& nums) {
-        if(nums.size()==1) return nums[0];
-        vector<int>dp(nums.size()+1, -1);
-        int robFirstHouse= fn(nums, 0, nums.size()-1, dp);
-        for(int i=0;i<dp.size();i++) dp[i]=-1;
-        int robLastHouse= fn(nums, 1, nums.size(), dp);
-        return max(robFirstHouse, robLastHouse);
+        int n=nums.size();
+        if(n==1) return nums[0];
+        return max(fn1(nums, n), fn2(nums, n));
     }
 };
